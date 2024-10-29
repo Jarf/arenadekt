@@ -20,6 +20,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 	<title>ArenaDekt</title>
 	<meta name="description" content="Convert archidekt to arena">
 	<link rel="stylesheet" rel="preload" as="style" type="text/css" href="<?=SITE_CSS?>main.css">
+	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+	<link rel="shortcut icon" href="/favicon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="ArenaDekt" />
+	<link rel="manifest" href="/favicon/site.webmanifest" />
 </head>
 <body>
 	<div id="container">
