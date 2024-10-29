@@ -15,8 +15,13 @@ class convertor{
 		$deck = $decknamemap = $bindparams = $where = $arena = array();
 		$archidektdata = explode(PHP_EOL, $archidektdata);
 		$archidektdata = array_filter($archidektdata);
-		foreach($archidektdata as $ckey => $card){
+		foreach($archidektdata as $ckey => &$card){
 			$card = trim($card);
+			if(strpos($card, '//') !== false){
+				$card = explode('//', $card);
+				$card = current($card);
+				$card = trim($card);
+			}
 			if(preg_match('/^(\d)\s(.*)$/', $card, $matches)){
 				$count = intval($matches[1]);
 				$name = trim($matches[2]);

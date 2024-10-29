@@ -58,12 +58,16 @@ if(!empty($carddatapath)){
 			isset($card['object']) && $card['object'] === 'card' && isset($card['name']) && !empty($card['name']) && (
 				(isset($card['games']) && is_array($card['games']) && in_array('arena', $card['games'])) || 
 				(isset($card['legalities']) && 
-					(isset($card['legalities']['alchemy']) && $card['legalities']['alchemy'] === 'legal') ||
-					(isset($card['legalities']['brawl']) && $card['legalities']['brawl'] === 'legal') ||
+					(isset($card['legalities']['brawl']) && $card['legalities']['brawl'] === 'legal') &&
 					(isset($card['legalities']['historic']) && $card['legalities']['historic'] === 'legal')
 				)
 			)
 		){
+			if(strpos($card['name'], '//') !== false){
+				$card['name'] = explode('//', $card['name']);
+				$card['name'] = current($card['name']);
+				$card['name'] = trim($card['name']);
+			}
 			$bindparams['name' . $i] = $card['name'];
 			$bindparams['alchemy' . $i] = ((isset($card['set_type']) && $card['set_type'] === 'alchemy') || (isset($card['promo_types']) && in_array('alchemy', $card['promo_types']))) ? 1 : 0;
 			$insert[] = '(:name' . $i . ',:alchemy' . $i . ')';
@@ -73,11 +77,15 @@ if(!empty($carddatapath)){
 		$reader->next();
 	}
 	print 'Done' . PHP_EOL;
+	print 'Deleting Old Data...' ;
+	$db->query('DELETE FROM cards');
+	$db->execute();
+	print 'Done' . PHP_EOL;
 	print 'Inserting Data';
 	$chunksize = 500;
 	$insert = array_chunk($insert, $chunksize);
 	$bindparams = array_chunk($bindparams, $chunksize * 2, true);
-	foreach($insert as $chunkkey => $insertdata){
+	foreach($insert as $chunkkey => &$insertdata){
 		print '.';
 		$sql = 'INSERT INTO cards (name,alchemy) VALUES ' . implode(',', $insertdata) . ' ON DUPLICATE KEY UPDATE name=VALUES(name),alchemy=VALUES(alchemy)';
 		$db->query($sql);
