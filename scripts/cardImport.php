@@ -94,6 +94,10 @@ if(!empty($carddatapath)){
 		}
 		$db->execute();
 	}
+	print 'Done' . PHP_EOL . 'Removing JSON File...';
+	if(file_exists($carddatapath)){
+		unlink($carddatapath);
+	}
 	print 'Done' . PHP_EOL;
 }else{
 	print 'Failed To Retrieve Card Data' . PHP_EOL;
