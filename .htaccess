@@ -1,0 +1,70 @@
+#Options +SymLinksIfOwnerMatch
+Options -Indexes
+RewriteEngine On
+
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS 
+Header set Referrer-Policy "no-referrer" 
+Header set X-Content-Type-Options "nosniff" 
+Header set X-Frame-Options "SAMEORIGIN" 
+Header set X-XSS-Protection "1; mode=block" 
+<If "%{HTTP_HOST} == 'arenadekt.local'">
+	Header always edit Set-Cookie (.*) $1;HttpOnly;SameSite=strict;Domain=arenadekt.local;Path=/;
+</If>
+<Else>
+	Header always edit Set-Cookie (.*) $1;HttpOnly;SameSite=strict;Secure;Domain=arenadekt.jarfjam.co.uk;Path=/;
+</Else>
+Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), display-capture=()"
+Header set Content-Security-Policy "default-src 'self'; img-src 'self'; style-src 'self'; base-uri 'self'; object-src 'none'"
+Header append Vary Accept env=REQUEST_image
+
+# Allow well-known checks
+RewriteRule /\.well-known|^\.well-known - [L]
+
+# Redirect to app subdomain
+RewriteCond %{HTTP_HOST} !^(arenadekt\.jarfjam\.co\.uk|arenadekt\.local)$ [NC]
+RewriteRule ^(.*)$ https://arenadekt\.jarfjam\.co\.uk/$1 [R=301,L]
+
+# https redirect
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Send resources to delivery
+RewriteRule ^sitemap.xml|robots.txt$ delivery.php [END]
+
+# MIME types
+AddType image/x-icon .ico
+AddType image/webp .webp
+
+
+# Redirect requests to index.php
+RewriteCond %{REQUEST_URI} !=/index.php
+RewriteCond %{REQUEST_URI} !/ajax/.* [NC]
+RewriteCond %{REQUEST_URI} !.*\.png$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.jpe?g$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.svg$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.css$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.js$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.map$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.txt$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.xml$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.ico$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.webp$ [NC]
+RewriteCond %{REQUEST_URI} !.*\.woff2?$ [NC]
+RewriteRule .* /index.php
+
+<IfModule mod_expires.c>
+	ExpiresActive on
+	ExpiresDefault "access"
+	ExpiresByType image/jpg "access plus 1 year"
+	ExpiresByType image/jpeg "access plus 1 year"
+	ExpiresByType image/png "access plus 1 year"
+	ExpiresByType image/svg+xml "access plus 1 year"
+	ExpiresByType image/x-icon "access plus 1 year"
+	ExpiresByType image/webp "access plus 1 year"
+	ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# direct file/dir access
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^(.*)$
