@@ -22,6 +22,7 @@ if($download){
 		foreach($response->data as &$list){
 			if(isset($list->object) && $list->object === 'bulk_data' && isset($list->type) && $list->type === 'oracle_cards' && isset($list->download_uri) && !empty($list->download_uri)){
 				$bulkurl = $list->download_uri;
+				unset($response);
 				print 'Found Bulk Data URL...';
 				break;
 			}
@@ -30,12 +31,15 @@ if($download){
 		if(!empty($bulkurl)){
 			print 'Downloading...';
 			$ch = curl_init();
+			$carddatapath = dirname(__FILE__) . '/' . basename($bulkurl);
+			$fp = fopen($carddatapath, 'w+');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_URL, $bulkurl);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $scryfallheader);
+			curl_setopt($ch, CURLOPT_FILE, $fp);
 			$carddata = curl_exec($ch);
-			$carddata = @json_decode($carddata);
 			curl_close($ch);
+			$carddata = @json_decode(file_get_contents($carddatapath));
 			print 'Done' . PHP_EOL;
 		}
 	}else{
