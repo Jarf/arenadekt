@@ -53,6 +53,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 				<input type="submit" value="Convert"/>
 				<?php endif; ?>
 			</form>
+			<?php if(!empty($deck)): ?>
+				<a id="reset" href="/">Go Again</a>
+			<?php endif; ?>
 		</div>
 		<?php if(!empty($removed)): ?>
 		<div class="item" id="removed">
