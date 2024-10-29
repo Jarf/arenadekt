@@ -1,0 +1,10 @@
+{
+    "require": {
+        "pcrov/jsonreader": "^1.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.12"
+        }
+    }
+}

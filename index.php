@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Arenadekt</title>
+	<title>ArenaDekt</title>
 	<meta name="description" content="Convert archidekt to arena">
 	<link rel="stylesheet" rel="preload" as="style" type="text/css" href="<?=SITE_CSS?>main.css">
 </head>
