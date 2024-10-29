@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'planewalkerregular';
+    src: url('/fonts/planewalker-webfont.woff2') format('woff2'),
+         url('/fonts/planewalker-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+html{
+	font-family: 'planewalkerregular';
+	color: #000000;
+	box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
+	background: #FCF5E5;
+	min-height: 100%;
+}
+
+div#container{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	div.item{
+		width: 600px;
+		max-width: 100%;
+		h1, form, textarea, input{
+			width: 100%;
+		}
+		textarea{
+			resize: none;
+			padding: 0;
+			border: 0;
+			white-space: pre-line;
+		}
+		input{
+
+		}
+	}
+}
