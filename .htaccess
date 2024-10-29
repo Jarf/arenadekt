@@ -38,6 +38,10 @@ RewriteCond %{REQUEST_URI} !main\.css$ [NC]
 RewriteCond %{REQUEST_URI} !fonts\/planewalker-webfont\.woff2?$ [NC]
 RewriteCond %{REQUEST_URI} !robots\.txt$ [NC]
 RewriteCond %{REQUEST_URI} !sitemap\.xml$ [NC]
+RewriteCond %{REQUEST_URI} !favicon\.*.png$ [NC]
+RewriteCond %{REQUEST_URI} !favicon\.*.svg$ [NC]
+RewriteCond %{REQUEST_URI} !favicon\.*.ico$ [NC]
+RewriteCond %{REQUEST_URI} !favicon\.*.webmanifset$ [NC]
 RewriteRule .* /index.php
 
 <IfModule mod_expires.c>
