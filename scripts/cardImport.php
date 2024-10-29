@@ -37,8 +37,10 @@ if($download){
 			curl_setopt($ch, CURLOPT_URL, $bulkurl);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $scryfallheader);
 			curl_setopt($ch, CURLOPT_FILE, $fp);
-			$carddata = curl_exec($ch);
+			curl_exec($ch);
 			curl_close($ch);
+			print 'Done' . PHP_EOL;
+			print 'Fetching Data From File...';
 			$carddata = @json_decode(file_get_contents($carddatapath));
 			print 'Done' . PHP_EOL;
 		}
