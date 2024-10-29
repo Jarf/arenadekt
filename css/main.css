@@ -28,14 +28,29 @@ div#container{
 		h1, form, textarea, input{
 			width: 100%;
 		}
+		h1{
+			text-align: center;
+		}
+		h1, h2{
+			margin: 0;
+		}
 		textarea{
 			resize: none;
 			padding: 0;
 			border: 0;
 			white-space: pre-line;
+			padding: 8px;
+			width: calc(100% - 16px);
 		}
 		input{
-
+			font-family: 'planewalkerregular';
+			color: #000000;
+			box-shadow: 0 0 60px #8a4d0f inset;
+			background: #FCF5E5;
+			cursor: pointer;
 		}
+	}div.item#title a{
+		text-decoration: none;
+		color: #000000;
 	}
 }

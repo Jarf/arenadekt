@@ -10,6 +10,7 @@ class convertor{
 		$result = array(
 			'arenadeck' => array(),
 			'removed' => array(),
+			'info' => array(),
 			'removedcount' => 0
 		);
 		$deck = $decknamemap = $bindparams = $where = $arena = array();
@@ -67,6 +68,8 @@ class convertor{
 					$result['removed'][] = $nfcard->count . ' ' . $nfcard->name;
 				}
 			}
+		}else{
+			$result['info'][] = 'Unable to parse deck list, either your deck has no cards in Arena or you didn\'t follow the instructions';
 		}
 		foreach($arena as $fcard){
 			$result['arenadeck'][] = $fcard['count'] . ' ' . $fcard['name'];
