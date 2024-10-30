@@ -25,7 +25,7 @@ div#container{
 	div.item{
 		width: 600px;
 		max-width: 100%;
-		h1, form, textarea, input{
+		h1, form, textarea, input, button{
 			width: 100%;
 		}
 		h1{
@@ -42,7 +42,7 @@ div#container{
 			padding: 8px;
 			width: calc(100% - 16px);
 		}
-		input, a#reset{
+		input, a#reset, button#copy{
 			font-family: 'planewalkerregular';
 			color: #000000;
 			box-shadow: 0 0 60px #8a4d0f inset;
@@ -52,6 +52,7 @@ div#container{
 			display: block;
 			text-align: center;
 			border: 1px solid #000000;
+			margin-bottom: 8px;
 		}
 	}div.item#title a{
 		text-decoration: none;

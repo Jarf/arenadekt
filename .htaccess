@@ -35,6 +35,7 @@ AddType image/webp .webp
 # Redirect requests to index.php
 RewriteCond %{REQUEST_URI} !=/index.php
 RewriteCond %{REQUEST_URI} !main\.css$ [NC]
+RewriteCond %{REQUEST_URI} !main\.js$ [NC]
 RewriteCond %{REQUEST_URI} !fonts\/planewalker-webfont\.woff2?$ [NC]
 RewriteCond %{REQUEST_URI} !robots\.txt$ [NC]
 RewriteCond %{REQUEST_URI} !sitemap\.xml$ [NC]

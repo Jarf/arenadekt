@@ -62,6 +62,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 				<?php endif; ?>
 			</form>
 			<?php if(!empty($deck)): ?>
+				<button id="copy">Copy To Clipboard</button>
 				<a id="reset" href="/">Go Again</a>
 			<?php endif; ?>
 		</div>
@@ -79,4 +80,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 		<?php endif; ?>
 	</div>
 </body>
+<script type="text/javascript" rel="preload" as="script" src="<?=SITE_JS?>main.js"></script>
 </html>
