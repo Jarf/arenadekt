@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/include/config.php');
 require_once(dirname(__FILE__) . '/include/autoload.php');
-$removed = $info = $deck = $removedcount = null;
+$removed = $info = $deck = $removedcount = $replaced = $replacedcount = null;
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archidekt'])){
 	$convertor = new convertor();
 	$result = $convertor->convertArchidektToArena($_POST['archidekt']);
@@ -9,6 +9,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 	$info = &$result['info'];
 	$deck = &$result['arenadeck'];
 	$removedcount = &$result['removedcount'];
+	$replaced = &$result['replaced'];
+	$replacedcount = &$result['replacedcount'];
 }
 ?>
 
@@ -65,8 +67,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 		</div>
 		<?php if(!empty($removed)): ?>
 		<div class="item" id="removed">
-			Removed <?=$removedcount?> cards<br/>
+			<b>Removed <?=$removedcount?> card(s)</b><br/>
 			<?=nl2br($removed)?>
+		</div>
+		<?php endif; ?>
+		<?php if(!empty($replaced)): ?>
+		<div class="item" id="replaced">
+			<b>Replaced <?=$replacedcount?> card(s) with Alchemy equivalents</b><br/>
+			<?=nl2br($replaced)?>
 		</div>
 		<?php endif; ?>
 	</div>
