@@ -16,6 +16,7 @@ define('DIR_CLASSES_ABSTRACT', DIR_CLASSES . 'abstract/');
 
 // Site Paths
 define('SITE_CSS', '/css/');
+define('SITE_JS', '/js/');
 
 // Site Vars
 $servername = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'arenadekt.jarfjam.co.uk';
