@@ -20,11 +20,6 @@ class convertor{
 		$archidektdata = array_filter($archidektdata);
 		foreach($archidektdata as $ckey => &$card){
 			$card = trim($card);
-			if(strpos($card, '//') !== false){
-				$card = explode('//', $card);
-				$card = current($card);
-				$card = trim($card);
-			}
 			if(preg_match('/^(\d)\s(.*)$/', $card, $matches)){
 				$count = intval($matches[1]);
 				$name = trim($matches[2]);
@@ -55,10 +50,27 @@ class convertor{
 			$notfound = array_map('json_decode',array_diff(array_map('json_encode', $deck), array_map('json_encode', $arena)));
 			$where = $bindparams = array();
 			if(!empty($notfound)){
-				// Check not found for alchemy equivalents
+				// Check not found for alchemy equivalents or double faced cards
 				$i = 0;
 				foreach($notfound as $nfkey => $nfcard){
-					if(substr($nfcard->name, 0, 2) !== 'A-'){
+					$alchemy = false;
+					if(substr($nfcard->name, 0, 2) === 'A-'){
+						$alchemy = true;
+					}
+					if(strpos($nfcard->name, '//') !== false){
+						$namepart = explode('//', $nfcard->name);
+						$namepart = current($namepart);
+						$namepart = trim($namepart);
+						$where[] = 'name = :name' . $i;
+						$bindparams['name' . $i] = $namepart;
+						$i++;
+						if($alchemy === false){
+							$where[] = 'name = :name' . $i;
+							$bindparams['name' . $i] = 'A-' . $namepart;
+							$i++;
+						}
+					}
+					if($alchemy === false){
 						$where[] = 'name = :name' . $i;
 						$bindparams['name'. $i] = 'A-' . $nfcard->name;
 						$i++;
@@ -75,7 +87,10 @@ class convertor{
 					if(!empty($rs)){
 						foreach($rs as $row){
 							foreach($notfound as $nfkey => $nfcard){
-								if($nfcard->name === substr($row->name, 2)){
+								if(
+									($nfcard->name === substr($row->name, 2)) ||
+									(strpos($nfcard->name, $row->name) === 0)
+								){
 									unset($notfound[$nfkey]);
 									$arena[] = array(
 										'name' => $row->name,
