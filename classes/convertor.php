@@ -65,7 +65,7 @@ class convertor{
 					}
 				}
 				if(!empty($where)){
-					$sql = 'SELECT name FROM cards WHERE ' . implode(' OR ', $where);
+					$sql = 'SELECT name FROM cards WHERE ' . implode(' OR ', $where) . ' AND alchemy = 1';
 					$this->db->query($sql);
 					foreach($bindparams as $bkey => $bval){
 						$this->db->bind($bkey, $bval, PDO::PARAM_STR);
