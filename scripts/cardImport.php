@@ -63,7 +63,7 @@ if(!empty($carddatapath)){
 				)
 			)
 		){
-			if(strpos($card['name'], '//') !== false){
+			if(strpos($card['name'], '//') !== false && (!isset($card['layout']) || (isset($card['layout']) && $card['layout'] !== 'split'))){
 				$card['name'] = explode('//', $card['name']);
 				$card['name'] = current($card['name']);
 				$card['name'] = trim($card['name']);

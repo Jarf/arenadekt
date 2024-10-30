@@ -74,7 +74,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 		<?php endif; ?>
 		<?php if(!empty($replaced)): ?>
 		<div class="item" id="replaced">
-			<b>Replaced <?=$replacedcount?> card(s) with Alchemy equivalents</b><br/>
+			<b>Replaced <?=$replacedcount?> card(s) with Alchemy equivalents/double sided card front names</b><br/>
 			<?=nl2br($replaced)?>
 		</div>
 		<?php endif; ?>
