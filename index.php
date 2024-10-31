@@ -41,6 +41,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 				<li>This is a tool to help convert your archidekt deck into a Historic Brawl format to be imported into MTG Arena</li>
 				<li>Open your deck on <a href="https://archidekt.com/" target="_blank">archidekt.com</a></li>
 				<li>Go To "Extras" and click "Export Deck"</li>
+				<li>Ensure "Include out of deck cards" is not checked</li>
 				<li>Export options should read "1 Example Card", if it doesn't click it and select "Uncheck All"</li>
 				<li>Ensure Export type is set to "Text" and click the "Copy" button</li>
 				<li>Come back here, paste it below and hit the "Convert" button</li>
