@@ -2,6 +2,7 @@
 print 'Init...';
 require_once(dirname(__DIR__) . '/include/config.php');
 require_once(dirname(__DIR__) . '/include/autoload.php');
+$db = new db();
 print 'Done' . PHP_EOL;
 
 $carddata = $bulkurl = $carddatapath = null;
@@ -19,6 +20,21 @@ if(!empty($response) && isset($response->data)){
 	foreach($response->data as &$list){
 		if(isset($list->object) && $list->object === 'bulk_data' && isset($list->type) && $list->type === 'oracle_cards' && isset($list->download_uri) && !empty($list->download_uri)){
 			$bulkurl = $list->download_uri;
+			$date = date('Y-m-d H:i:s', strtotime($list->updated_at));
+			$db->query('SELECT lastmodified FROM import LIMIT 1');
+			$db->execute();
+			if($db->rowCount() === 0){
+				$db->query('INSERT INTO import (lastmodified) VALUES (:date)');
+				$db->bind('date', $date);
+				$db->execute();
+			}else{
+				$current = $db->fetch();
+				$current = current($current);
+				if($date <= $current){
+					print 'Data hasn\'t been modified since last import, aborting' . PHP_EOL;
+					exit();
+				}
+			}
 			unset($response);
 			print 'Found Bulk Data URL...';
 			break;
@@ -44,7 +60,6 @@ if(!empty($response) && isset($response->data)){
 
 if(!empty($carddatapath)){
 	print 'Parsing Card Data';
-	$db = new db();
 	$insert = $bindparams = array();
 	$i = 0;
 	$fp = fopen($carddatapath, 'r');
