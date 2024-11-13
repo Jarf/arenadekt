@@ -1,1 +1,2 @@
 CREATE TABLE `arenadekt`.`cards` ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `alchemy` TINYINT UNSIGNED NOT NULL DEFAULT '0' , PRIMARY KEY (`id`), INDEX `cardsAlchemyIdx` (`alchemy`), UNIQUE `cardsNameUnique` (`name`)) ENGINE = InnoDB;
+CREATE TABLE `arenadekt`.`import` ( `lastmodified` DATETIME NOT NULL ) ENGINE = InnoDB;
