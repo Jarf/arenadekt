@@ -73,8 +73,7 @@ if(!empty($carddatapath)){
 			isset($card['object']) && $card['object'] === 'card' && isset($card['name']) && !empty($card['name']) && (
 				(isset($card['games']) && is_array($card['games']) && in_array('arena', $card['games'])) || 
 				(isset($card['legalities']) && 
-					(isset($card['legalities']['brawl']) && $card['legalities']['brawl'] === 'legal') &&
-					(isset($card['legalities']['historic']) && $card['legalities']['historic'] === 'legal')
+					(isset($card['legalities']['brawl']) && $card['legalities']['brawl'] === 'legal')
 				)
 			)
 		){
