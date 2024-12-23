@@ -33,6 +33,11 @@ if(!empty($response) && isset($response->data)){
 				if($date <= $current){
 					print 'Data hasn\'t been modified since last import, aborting' . PHP_EOL;
 					exit();
+				}else{
+					$db->query('UPDATE import SET lastmodified = :date');
+					$db->bind('date', $date);
+					$db->execute();
+					print 'Updated last modified date' . PHP_EOL;
 				}
 			}
 			unset($response);
