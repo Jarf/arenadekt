@@ -14,8 +14,13 @@ Header set X-XSS-Protection "1; mode=block"
 	Header always edit Set-Cookie (.*) $1;HttpOnly;SameSite=strict;Secure;Domain=arenadekt.jarfjam.co.uk;Path=/;
 </Else>
 Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), display-capture=()"
-Header set Content-Security-Policy "default-src 'self'; img-src 'self'; style-src 'self'; base-uri 'self'; object-src 'none'"
-
+Header set Content-Security-Policy "default-src 'self'; \
+	script-src 'self' 'sha256-7XC+AGgMglE3VV+4GYOxckOBX/CYxPAUtIPZFxU3GUk='; \
+		require-trusted-types-for 'script'; \
+			trusted-types default"
+Header add Cross-Origin-Embedder-Policy "require-corp"
+Header add Cross-Origin-Opener-Policy "same-origin"
+Header add Cross-Origin-Resource-Policy "same-origin"
 # Allow well-known checks
 RewriteRule /\.well-known|^\.well-known - [L]
 

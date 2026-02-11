@@ -16,12 +16,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 
 <!DOCTYPE html>
 <html lang="en">
+<script>
+	if (window.trustedTypes && window.trustedTypes.createPolicy) {
+		window.trustedTypes.createPolicy('default', {
+			createHTML: string => string,
+			createScriptURL: string => string,
+			createScript: string => string
+		});
+	}
+</script>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ArenaDekt</title>
 	<meta name="description" content="Convert Archidekt into MTG Arena Historic Brawl format">
-	<link rel="stylesheet" rel="preload" as="style" type="text/css" href="<?=SITE_CSS?>main.css">
+	<link rel="preload" href="<?=SITE_CSS?>main.css" as="style"/>
+	<link rel="preload" href="<?=SITE_FONT?>planewalker-webfont.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high"/>
+	<link rel="preload" href="<?=SITE_JS?>main.js" as="script" fetchpriority="high"/>
+	<link rel="stylesheet" type="text/css" href="<?=SITE_CSS?>main.css">
 	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 	<link rel="shortcut icon" href="/favicon/favicon.ico" />
@@ -30,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 	<link rel="manifest" href="/favicon/site.webmanifest" />
 </head>
 <body>
-	<div id="container">
+	<div id="container" role="main">
 		<div class="item" id="title">
 			<a href="/"><h1>ArenaDekt</h1></a>
 		</div>
