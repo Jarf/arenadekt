@@ -12,6 +12,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 	$replaced = &$result['replaced'];
 	$replacedcount = &$result['replacedcount'];
 }
+$lastupdate = new db();
+$lastupdate->query('SELECT lastmodified FROM import LIMIT 1');
+$lastupdate->execute();
+if($lastupdate->rowCount() === 1){
+	$lastupdate = $lastupdate->fetch();
+	$lastupdate = $lastupdate->lastmodified;
+	$lastupdate = DateTime::createFromFormat('Y-m-d H:i:s', $lastupdate);
+	$lastupdate = $lastupdate->format('F jS, Y');
+}else{
+	$lastupdate = null;
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +56,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archi
 	<div id="container" role="main">
 		<div class="item" id="title">
 			<a href="/"><h1>ArenaDekt</h1></a>
+			<?php if($lastupdate !== null): ?>
+			<span>Last Updated: <?=$lastupdate?></span>
+			<?php endif; ?>
 		</div>
 		<?php if(empty($deck)): ?>
 		<div class="item" id="help">
