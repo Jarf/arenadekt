@@ -27,30 +27,21 @@ if($lastupdate->rowCount() === 1){
 
 <!DOCTYPE html>
 <html lang="en">
-<script>
-	if (window.trustedTypes && window.trustedTypes.createPolicy) {
-		window.trustedTypes.createPolicy('default', {
-			createHTML: string => string,
-			createScriptURL: string => string,
-			createScript: string => string
-		});
-	}
-</script>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ArenaDekt</title>
 	<meta name="description" content="Convert Archidekt into MTG Arena Historic Brawl format">
-	<link rel="preload" href="<?=SITE_CSS?>main.css" as="style"/>
 	<link rel="preload" href="<?=SITE_FONT?>planewalker-webfont.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high"/>
-	<link rel="preload" href="<?=SITE_JS?>main.js" as="script" fetchpriority="high"/>
-	<link rel="stylesheet" type="text/css" href="<?=SITE_CSS?>main.css">
 	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 	<link rel="shortcut icon" href="/favicon/favicon.ico" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 	<meta name="apple-mobile-web-app-title" content="ArenaDekt" />
 	<link rel="manifest" href="/favicon/site.webmanifest" />
+	<style>
+		<?=file_get_contents(DIR_CSS . 'main.css')?>
+	</style>
 </head>
 <body>
 	<div id="container" role="main">
@@ -106,6 +97,15 @@ if($lastupdate->rowCount() === 1){
 		</div>
 		<?php endif; ?>
 	</div>
+	<script>
+		if (window.trustedTypes && window.trustedTypes.createPolicy) {
+			window.trustedTypes.createPolicy('default', {
+				createHTML: string => string,
+				createScriptURL: string => string,
+				createScript: string => string
+			});
+		}
+		<?=file_get_contents(DIR_JS . 'main.js')?>
+	</script>
 </body>
-<script type="text/javascript" rel="preload" as="script" src="<?=SITE_JS?>main.js"></script>
 </html>
