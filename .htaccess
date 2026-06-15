@@ -15,8 +15,8 @@ Header set X-XSS-Protection "1; mode=block"
 </Else>
 Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), display-capture=()"
 Header set Content-Security-Policy "default-src 'self'; \
-	script-src 'sha256-tRsgXTdR1etSaZXyCM6wwIfPZJJ3hAA718am41jge70='; \
-		style-src 'sha256-AsL903B+zMlHhNCmjlqS1c0q6aJKqb53FRsd3NOGmxg='; \
+	script-src 'sha256-Fq9VSMG0kMFl9dlZkYDHiqvaHG0MJWnzrGnjhPY4lTg='; \
+		style-src 'sha256-55GX3KY06kAdH46sACNYV377KmV93lf3MY7dZ5ghMHg='; \
 			require-trusted-types-for 'script'; \
 				trusted-types default"
 Header add Cross-Origin-Embedder-Policy "require-corp"
@@ -40,8 +40,6 @@ AddType image/webp .webp
 
 # Redirect requests to index.php
 RewriteCond %{REQUEST_URI} !=/index.php
-RewriteCond %{REQUEST_URI} !main\.css$ [NC]
-RewriteCond %{REQUEST_URI} !main\.js$ [NC]
 RewriteCond %{REQUEST_URI} !fonts\/planewalker-webfont\.woff2?$ [NC]
 RewriteCond %{REQUEST_URI} !robots\.txt$ [NC]
 RewriteCond %{REQUEST_URI} !sitemap\.xml$ [NC]

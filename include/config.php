@@ -9,15 +9,11 @@ define('DB_TYPE', 'mysql');
 // File Paths
 define('DIR_ROOT', dirname(__DIR__) . '/');
 define('DIR_VENDOR', DIR_ROOT . 'vendor/');
-define('DIR_CSS', DIR_ROOT . 'css/');
-define('DIR_JS', DIR_ROOT . 'js/');
 define('DIR_INCLUDE', DIR_ROOT . 'include/');
 define('DIR_CLASSES', DIR_ROOT . 'classes/');
 define('DIR_CLASSES_ABSTRACT', DIR_CLASSES . 'abstract/');
 
 // Site Paths
-define('SITE_CSS', '/css/');
-define('SITE_JS', '/js/');
 define('SITE_FONT', '/fonts/');
 
 // Site Vars
