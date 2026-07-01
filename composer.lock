@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c67768c257be528f67ac3f1387cfaf5",
+    "content-hash": "7f1fc4f42b59007f260b59cde869314c",
     "packages": [
         {
             "name": "pcrov/jsonreader",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pcrov/JsonReader.git",
-                "reference": "339b8891ec01d2394f4de18818658a0f84abffa5"
+                "reference": "4d8483a62acb4595886a3ffa20bbe38a602f0544"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pcrov/JsonReader/zipball/339b8891ec01d2394f4de18818658a0f84abffa5",
-                "reference": "339b8891ec01d2394f4de18818658a0f84abffa5",
+                "url": "https://api.github.com/repos/pcrov/JsonReader/zipball/4d8483a62acb4595886a3ffa20bbe38a602f0544",
+                "reference": "4d8483a62acb4595886a3ffa20bbe38a602f0544",
                 "shasum": ""
             },
             "require": {
@@ -56,9 +56,9 @@
             ],
             "support": {
                 "issues": "https://github.com/pcrov/JsonReader/issues",
-                "source": "https://github.com/pcrov/JsonReader/tree/1.0.3"
+                "source": "https://github.com/pcrov/JsonReader/tree/1.0.4"
             },
-            "time": "2024-06-17T14:06:32+00:00"
+            "time": "2025-11-11T08:52:33+00:00"
         },
         {
             "name": "pcrov/unicode",
@@ -169,5 +169,8 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-overrides": {
+        "php": "8.5"
+    },
+    "plugin-api-version": "2.6.0"
 }
