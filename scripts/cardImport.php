@@ -101,6 +101,8 @@ if(!empty($carddatapath)){
 	$db->execute();
 	print 'Done' . PHP_EOL;
 	print 'Inserting Data';
+	$db->query('ALTER TABLE cards AUTO_INCREMENT = 1');
+	$db->execute();
 	$chunksize = 500;
 	$insert = array_chunk($insert, $chunksize);
 	$bindparams = array_chunk($bindparams, $chunksize * 2, true);
