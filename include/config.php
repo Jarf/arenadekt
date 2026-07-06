@@ -25,7 +25,7 @@ if(isset($_SERVER['HTTPS'])){
 	$https = true;
 }
 $dev = 0;
-define('SITE_ROOT', ($https ? "https" : 'http') . "://{$servername}/");
+define('SITE_ROOT', ($https ? 'https' : 'http') . "://{$servername}/");
 if(isset($_SERVER['HTTP_HOST'])){
 	switch ($_SERVER['HTTP_HOST']) {
 		case 'arenadekt.local':
