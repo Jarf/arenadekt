@@ -103,6 +103,13 @@ if($lastupdate->rowCount() === 1){
 					padding: 8px;
 					margin-bottom: 8px;
 				}
+				hr{
+					margin: 4px 0;
+					height: 1px;
+					background-color: #000000;
+					width: 100%;
+					border: 0;
+				}
 			}
 			div.item#title a{
 				text-decoration: none;
@@ -133,6 +140,7 @@ if($lastupdate->rowCount() === 1){
 				<li>Select the game format you're converting for and hit the "Convert" button</li>
 				<li>Copy the text from the text box, open the "Decks" tab on Arena and use the "Import" button</li>
 			</ol>
+			<hr/>
 		</div>
 		<?php endif; ?>
 		<?php if(!empty($info)): ?>
@@ -142,10 +150,12 @@ if($lastupdate->rowCount() === 1){
 		<?php endif; ?>
 		<div class="item" id="form">
 			<form method="POST">
-				<textarea name="archidekt" placeholder="Paste exported archidekt data here&#10;e.g.&#10;1 Mountain&#10;1 Goblin Javelineer" autofocus required rows="10"><?=$deck?></textarea>
+				<label for="decklisttextarea">Deck List</label>
+				<textarea id="decklisttextarea" name="archidekt" placeholder="Paste exported archidekt data here&#10;e.g.&#10;1 Mountain&#10;1 Goblin Javelineer" autofocus required rows="10"><?=$deck?></textarea>
 				<?php if(empty($deck)): ?>
 				<br/>
-				<select name="gamemode">
+				<label for="gamemodeselect">Game Mode</label>
+				<select id="gamemodeselect" name="gamemode">
 					<?php foreach(GAMEMODES as $gkey => $gval): ?>
 					<option value="<?=pow(2, $gkey)?>"><?=ucwords(trim(str_ends_with($gval, 'brawl') ? substr($gval, 0, -5) . ' brawl' : $gval))?></option>
 					<?php endforeach; ?>

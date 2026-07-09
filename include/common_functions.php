@@ -17,8 +17,4 @@ function getDirectoryFiles(string $path){
 	}
 	return $return;
 }
-
-function endsWith(string $haystack, string $needle) {
-	return substr_compare($haystack, $needle, -strlen($needle)) === 0;
-}
 ?>

@@ -6,14 +6,14 @@ require_once(DIR_INCLUDE . 'common_functions.php');
 // Abstract Classes Autoload
 $classes = getDirectoryFiles(DIR_CLASSES_ABSTRACT);
 foreach($classes as $class){
-    if(endsWith($class, '.php')){
+    if(str_ends_with($class, '.php')){
         include_once($class);
     }
 }
 // Classes Autoload
 $classes = getDirectoryFiles(DIR_CLASSES);
 foreach($classes as $class){
-    if(endsWith($class, '.php')){
+    if(str_ends_with($class, '.php')){
         include_once($class);
     }
 }
