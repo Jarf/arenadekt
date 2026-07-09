@@ -6,7 +6,7 @@ class convertor{
 		$this->db = new db();
 	}
 
-	public function convertArchidektToArena(string $archidektdata){
+	public function convertArchidektToArena(string $archidektdata, int $gamemode){
 		$result = array(
 			'arenadeck' => array(),
 			'removed' => array(),
@@ -18,6 +18,7 @@ class convertor{
 		$deck = $decknamemap = $bindparams = $where = $arena = array();
 		$archidektdata = explode(PHP_EOL, $archidektdata);
 		$archidektdata = array_filter($archidektdata);
+		$bindparams['gamemode'] = $gamemode;
 		foreach($archidektdata as $ckey => &$card){
 			$card = trim($card);
 			if(preg_match('/^(\d)\s(.*)$/', $card, $matches)){
@@ -37,7 +38,7 @@ class convertor{
 			}
 		}
 		if(!empty($where)){
-			$sql = 'SELECT name FROM cards WHERE name IN (' . implode(',', $where) . ')';
+			$sql = 'SELECT name FROM cards WHERE name IN (' . implode(',', $where) . ') AND legal & :gamemode';
 			$this->db->query($sql);
 			foreach($bindparams as $bkey => $bval){
 				$this->db->bind($bkey, $bval, PDO::PARAM_STR);
@@ -49,6 +50,7 @@ class convertor{
 			}
 			$notfound = array_map('json_decode',array_diff(array_map('json_encode', $deck), array_map('json_encode', $arena)));
 			$where = $bindparams = array();
+			$bindparams['gamemode'] = $gamemode;
 			if(!empty($notfound)){
 				// Check not found for alchemy equivalents or double faced cards
 				$i = 0;
@@ -77,7 +79,7 @@ class convertor{
 					}
 				}
 				if(!empty($where)){
-					$sql = 'SELECT name FROM cards WHERE ' . implode(' OR ', $where) . ' AND alchemy = 1';
+					$sql = 'SELECT name FROM cards WHERE ' . implode(' OR ', $where) . ' AND alchemy = 1  AND legal & :gamemode';
 					$this->db->query($sql);
 					foreach($bindparams as $bkey => $bval){
 						$this->db->bind($bkey, $bval, PDO::PARAM_STR);

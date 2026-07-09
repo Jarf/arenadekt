@@ -13,6 +13,9 @@ define('DIR_INCLUDE', DIR_ROOT . 'include/');
 define('DIR_CLASSES', DIR_ROOT . 'classes/');
 define('DIR_CLASSES_ABSTRACT', DIR_CLASSES . 'abstract/');
 
+// Site Constants
+define('GAMEMODES', array('historic','timeless','brawl','competitivebrawl','alchemy','pioneer','modern','standardbrawl'));
+
 // Site Paths
 define('SITE_FONT', '/fonts/');
 

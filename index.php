@@ -2,9 +2,9 @@
 require_once(dirname(__FILE__) . '/include/config.php');
 require_once(dirname(__FILE__) . '/include/autoload.php');
 $removed = $info = $deck = $removedcount = $replaced = $replacedcount = null;
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archidekt'])){
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST) && isset($_POST['archidekt']) && isset($_POST['gamemode'])){
 	$convertor = new convertor();
-	$result = $convertor->convertArchidektToArena($_POST['archidekt']);
+	$result = $convertor->convertArchidektToArena($_POST['archidekt'], $_POST['gamemode']);
 	$removed = &$result['removed'];
 	$info = &$result['info'];
 	$deck = &$result['arenadeck'];
@@ -31,7 +31,7 @@ if($lastupdate->rowCount() === 1){
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ArenaDekt</title>
-	<meta name="description" content="Convert Archidekt into MTG Arena Historic Brawl format">
+	<meta name="description" content="Convert Archidekt decks to import into MTG Arena">
 	<link rel="preload" href="<?=SITE_FONT?>planewalker-webfont.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high"/>
 	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
@@ -68,7 +68,7 @@ if($lastupdate->rowCount() === 1){
 			div.item{
 				width: 600px;
 				max-width: 100%;
-				h1, form, textarea, input, button{
+				h1, form, textarea, input, button, select{
 					width: 100%;
 				}
 				h1, a + span{
@@ -96,9 +96,15 @@ if($lastupdate->rowCount() === 1){
 					display: block;
 					text-align: center;
 					border: 1px solid #000000;
+					padding: 8px;
 					margin-bottom: 8px;
 				}
-			}div.item#title a{
+				select{
+					padding: 8px;
+					margin-bottom: 8px;
+				}
+			}
+			div.item#title a{
 				text-decoration: none;
 				color: #000000;
 			}
@@ -117,13 +123,14 @@ if($lastupdate->rowCount() === 1){
 		<div class="item" id="help">
 			<h2>Instructions</h2>
 			<ol>
-				<li>This is a tool to help convert your archidekt deck into a Historic Brawl format to be imported into MTG Arena</li>
+				<li>This is a tool to help convert your archidekt deck into a format to be imported into MTG Arena by removing/replacing unavailable/illegal cards</li>
 				<li>Open your deck on <a href="https://archidekt.com/" target="_blank">archidekt.com</a></li>
 				<li>Go To "Extras" and click "Export Deck"</li>
 				<li>Ensure "Include out of deck cards" is not checked</li>
 				<li>Export options should read "1 Example Card", if it doesn't click it and select "Uncheck All"</li>
 				<li>Ensure Export type is set to "Text" and click the "Copy" button</li>
-				<li>Come back here, paste it below and hit the "Convert" button</li>
+				<li>Come back here and paste it below</li>
+				<li>Select the game format you're converting for and hit the "Convert" button</li>
 				<li>Copy the text from the text box, open the "Decks" tab on Arena and use the "Import" button</li>
 			</ol>
 		</div>
@@ -137,6 +144,12 @@ if($lastupdate->rowCount() === 1){
 			<form method="POST">
 				<textarea name="archidekt" placeholder="Paste exported archidekt data here&#10;e.g.&#10;1 Mountain&#10;1 Goblin Javelineer" autofocus required rows="10"><?=$deck?></textarea>
 				<?php if(empty($deck)): ?>
+				<br/>
+				<select name="gamemode">
+					<?php foreach(GAMEMODES as $gkey => $gval): ?>
+					<option value="<?=pow(2, $gkey)?>"><?=ucwords(trim(str_ends_with($gval, 'brawl') ? substr($gval, 0, -5) . ' brawl' : $gval))?></option>
+					<?php endforeach; ?>
+				</select>
 				<br/>
 				<input type="submit" value="Convert"/>
 				<?php endif; ?>
