@@ -40,6 +40,14 @@ if($lastupdate->rowCount() === 1){
 	<meta name="apple-mobile-web-app-title" content="ArenaDekt" />
 	<link rel="manifest" href="/favicon/site.webmanifest" />
 	<link rel="canonical" href="<?=SITE_ROOT?>">
+	<script type="application/ld+json">
+		{
+			"@context" : "https://schema.org",
+			"@type" : "WebSite",
+			"name" : "ArenaDekt",
+			"url" : "{{constant('SITE_ROOT')}}"
+		}
+	</script>
 	<style>
 		@font-face {
 		    font-family: 'planewalkerregular';
