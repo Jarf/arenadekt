@@ -45,7 +45,7 @@ if($lastupdate->rowCount() === 1){
 			"@context" : "https://schema.org",
 			"@type" : "WebSite",
 			"name" : "ArenaDekt",
-			"url" : "{{constant('SITE_ROOT')}}"
+			"url" : "<?=SITE_ROOT?>"
 		}
 	</script>
 	<style>
