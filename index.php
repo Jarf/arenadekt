@@ -65,7 +65,6 @@ if($lastupdate->rowCount() === 1){
 			background: #FCF5E5;
 			min-height: 100%;
 		}
-
 		div#container{
 			display: flex;
 			flex-direction: column;
@@ -74,6 +73,7 @@ if($lastupdate->rowCount() === 1){
 			align-content: center;
 			align-items: center;
 			div.item{
+				position: relative;
 				width: 600px;
 				max-width: 100%;
 				h1, form, textarea, input, button, select{
@@ -118,6 +118,11 @@ if($lastupdate->rowCount() === 1){
 					width: 100%;
 					border: 0;
 				}
+				a#kofi{
+					position: absolute;
+					top: 0;
+					right: 0;
+				}
 			}
 			div.item#title a{
 				text-decoration: none;
@@ -129,6 +134,7 @@ if($lastupdate->rowCount() === 1){
 <body>
 	<div id="container" role="main">
 		<div class="item" id="title">
+			<a id="kofi" href="https://ko-fi.com/jarfjam" target="_blank"><img height="16" width="16" src="/favicon/kofi.svg" alt="Support me on Ko-fi"/></a>
 			<a href="/"><h1>ArenaDekt</h1></a>
 			<?php if($lastupdate !== null): ?>
 			<span>Last Updated: <?=$lastupdate?></span>

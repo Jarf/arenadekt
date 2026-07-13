@@ -16,7 +16,7 @@ Header set X-XSS-Protection "1; mode=block"
 Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), display-capture=()"
 Header set Content-Security-Policy "default-src 'self'; \
 	script-src 'sha256-Fq9VSMG0kMFl9dlZkYDHiqvaHG0MJWnzrGnjhPY4lTg='; \
-		style-src 'sha256-lAAqQIdjAIWx94lTZrKNLeJ5vQZ8WiG2I6C51hHm6Yg='; \
+		style-src 'sha256-kCwrZRxjc1rubx3F/6UyOY/PI06iS3adVk0rQDDlo4U='; \
 			require-trusted-types-for 'script'; \
 				trusted-types default"
 Header add Cross-Origin-Embedder-Policy "require-corp"
