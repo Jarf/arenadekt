@@ -18,8 +18,8 @@ curl_close($ch);
 if(!empty($response) && isset($response->data)){
 	print 'Done' . PHP_EOL;
 	foreach($response->data as &$list){
-		if(isset($list->object) && $list->object === 'bulk_data' && isset($list->type) && $list->type === 'default_cards' && isset($list->download_uri) && !empty($list->download_uri)){
-			$bulkurl = $list->download_uri;
+		if(isset($list->object) && $list->object === 'bulk_data' && isset($list->type) && $list->type === 'default_cards' && isset($list->jsonl_download_uri) && !empty($list->jsonl_download_uri)){
+			$bulkurl = $list->jsonl_download_uri;
 			$date = date('Y-m-d H:i:s', strtotime($list->updated_at));
 			$db->query('SELECT lastmodified FROM import LIMIT 1');
 			$db->execute();
@@ -47,14 +47,29 @@ if(!empty($response) && isset($response->data)){
 	}
 
 	if(!empty($bulkurl)){
+		$compressed = $inflate = false;
 		print 'Downloading...';
 		$ch = curl_init();
 		$carddatapath = dirname(__FILE__) . '/' . basename($bulkurl);
+		if(str_ends_with($carddatapath, '.gz') === true){
+			$compressed = true;
+			$carddatapath = substr($carddatapath, 0, -3);
+			$inflate = inflate_init(ZLIB_ENCODING_GZIP);
+		}
 		$fp = fopen($carddatapath, 'w+');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_URL, $bulkurl);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $scryfallheader);
 		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, string $chunk) use ($inflate, $fp): int {
+			$decoded = inflate_add($inflate, $chunk);
+			if ($decoded === false) {
+			    return 0;
+			}
+
+			fwrite($fp, $decoded);
+			return strlen($chunk);
+		});
 		curl_exec($ch);
 		curl_close($ch);
 		print 'Done' . PHP_EOL;
@@ -69,12 +84,15 @@ if(!empty($carddatapath)){
 	$insert = $bindparams = array();
 	$i = 0;
 	$fp = fopen($carddatapath, 'r');
-	$reader = new pcrov\JsonReader\JsonReader();
-	$reader->stream($fp);
-	$reader->read();
-	$reader->read();
-	while($reader->type() === pcrov\JsonReader\JsonReader::OBJECT){
-		$card = $reader->value();
+	while(($line = fgets($fp)) !== false){
+		$line = trim($line);
+		if($line === ''){
+			continue;
+		}
+		$card = json_decode($line, true);
+		if(!is_array($card)){
+			continue;
+		}
 		$legal = false;
 		$legality = 0;
 		if(isset($card['object']) && $card['object'] === 'card' && isset($card['name']) && !empty($card['name']) && ((isset($card['games']) && is_array($card['games']) && in_array('arena', $card['games']))) && (!in_array($card['oracle_id'], $oracleids))){
@@ -102,8 +120,8 @@ if(!empty($carddatapath)){
 				}
 			}
 		}
-		$reader->next();
 	}
+	fclose($fp);
 	print 'Done' . PHP_EOL;
 	print 'Deleting Old Data...' ;
 	$db->query('DELETE FROM cards');
